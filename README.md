@@ -59,32 +59,4 @@ The system uses the **Repository Pattern** for data access and applies both **se
 | **Mohamed Ashraf** | Computers & Information - Tanta |
 | **Mohamed Arafa**  | Engineering - Tanta |
 
----
 
-## 📌 Task Distribution
-- **Mohamed Mohsen** *(Team Lead / Backend Integration)*:  
-  - Project setup, Repository Pattern, common validation, integration, code review, final testing.
-- **Mohamed Khaled** *(Backend Developer)*:  
-  - Business logic, controllers, server-side validation.
-- **Manar Mohamed** *(Frontend Developer)*:  
-  - Razor views, HTML/CSS/Bootstrap, client-side validation.
-- **Mohamed Ashraf** *(Database Developer)*:  
-  - Database schema, migrations, relationships, seed data.
-- **Mohamed Arafa** *(Tester & Documentation)*:  
-  - Manual testing, bug reporting, documentation, final presentation.
-
----
-
-## ⚙️ Technologies Used
-- **ASP.NET MVC**
-- **Entity Framework**
-- **SQL Server**
-- **Bootstrap**
-- **jQuery**
-
----
-
-## 🚀 How to Run
-1. Clone the repository:
-   ```bash
-   git clone <repo-url>
