@@ -1,7 +1,15 @@
+using ITI_Tanta_Final_Project.context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+// Register the required services for Razor Pages
+builder.Services.AddRazorPages();
+// Register the required services for Entity Framework Core
+builder.Services.AddDbContext<Context>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
