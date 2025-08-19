@@ -1,4 +1,7 @@
 using ITI_Tanta_Final_Project.context;
+using ITI_Tanta_Final_Project.Repositories.Contracts;
+using ITI_Tanta_Final_Project.Repositories.Implementations;
+using ITI_Tanta_Final_Project.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +13,17 @@ builder.Services.AddRazorPages();
 // Register the required services for Entity Framework Core
 builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register the repositories
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<IGradeRepository, GradeRepository>();
+builder.Services.AddScoped<ISessionRepository, SessionRepository>();
+
+// Register the Unit of Work
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
 
 var app = builder.Build();
 
