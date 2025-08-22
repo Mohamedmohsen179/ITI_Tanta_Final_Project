@@ -9,9 +9,13 @@ namespace ITI_Tanta_Final_Project.Models
         public DateTime StartDate { get; set; }
 
 
+
         [Required(ErrorMessage = "EndDate is required")]
         public DateTime EndDate { get; set; }
 
+        [Required(ErrorMessage = "Title is required")]
+        [MaxLength(100, ErrorMessage = "Title must not exceed 100 characters")]
+        public string Title { get; set; } = string.Empty;
 
         [Required(ErrorMessage ="courseid is required")]
         public int CourseId { get; set; }
@@ -19,6 +23,14 @@ namespace ITI_Tanta_Final_Project.Models
         public Course Course { get; set; } = new Course();
 
         public List<Grade> Grades { get; set; } = new List<Grade>();
+
+        public bool IsActive
+        {
+            get
+            {
+                return DateTime.Now >= StartDate && DateTime.Now <= EndDate;
+            }
+        }
 
 
     }

@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ITI_Tanta_Final_Project.Models.Course
+
+@{
+    ViewData["Title"] = "Create Course";
+}
+
+<div class="row">
+    <div class="col-md-3 bg-light p-3" style="min-height:100vh;">
+        <h4 class="mb-4">Dashboard</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link active" href="/Courses">📚 Courses</a></li>
+        </ul>
+    </div>
+
+    <div class="col-md-9 p-4">
+        <h2>Create Course</h2>
+        <form asp-action="Create" method="post">
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Category" class="form-label"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="InstructorId" class="form-label">Instructor</label>
+                <select asp-for="InstructorId" class="form-control" asp-items="ViewBag.Instructors"></select>
+            </div>
+
+            <button type="submit" class="btn btn-success">Save</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+

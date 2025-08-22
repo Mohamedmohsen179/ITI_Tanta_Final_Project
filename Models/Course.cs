@@ -15,7 +15,7 @@ namespace ITI_Tanta_Final_Project.Models
         public string Category { get; set; }
 
         public int InstructorId { get; set; }
-        public User Instructor { get; set; }= new User();
+        public User? Instructor { get; set; }
 
         public List<Session> Sessions { get; set; } = new List<Session>();
 

@@ -1,8 +1,84 @@
-﻿@{
+﻿@* @{
     ViewData["Title"] = "Home Page";
-}
+} *@
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@* @{
+    ViewData["Title"] = "Dashboard";
+} *@
+
+<div class="container-fluid mt-4">
+    <h2 class="mb-3">Dashboard</h2>
+    <p class="text-muted">Welcome to your Training Management System</p>
+
+    <!-- Cards Row -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card shadow-sm rounded-3 p-3">
+                <h6>Total Courses</h6>
+                <h3>@ViewBag.TotalCourses</h3>
+                <small class="text-success">+12% from last month</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm rounded-3 p-3">
+                <h6>Active Sessions</h6>
+                <h3>@ViewBag.ActiveSessions</h3>
+                <small class="text-success">+8% from last month</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm rounded-3 p-3">
+                <h6>Total Users</h6>
+                <h3>@ViewBag.TotalUsers</h3>
+                <small class="text-warning">+23% from last month</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm rounded-3 p-3">
+                <h6>Average Grade</h6>
+                <h3>@ViewBag.AvgGrade</h3>
+                <small class="text-danger">+5.2% from last month</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row g-3">
+        <!-- Recent Activity -->
+        <div class="col-md-8">
+            <div class="card shadow-sm rounded-3 p-3">
+                <h5>Recent Activity</h5>
+                <ul class="list-group list-group-flush mt-2">
+                    <li class="list-group-item">
+                        <span class="badge bg-success me-2">●</span>
+                        New course "Advanced React" created
+                        <small class="text-muted">2 hours ago</small>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="badge bg-primary me-2">●</span>
+                        Session "JavaScript Fundamentals" completed
+                        <small class="text-muted">4 hours ago</small>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="badge bg-warning me-2">●</span>
+                        15 new trainees enrolled
+                        <small class="text-muted">1 day ago</small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="col-md-4">
+            <div class="card shadow-sm rounded-3 p-3">
+                <h5>Quick Actions</h5>
+                <div class="d-grid gap-2 mt-2">
+                    <a href="/Courses/Create" class="btn btn-outline-dark">📘 Create New Course</a>
+                    <a href="/Sessions/Create" class="btn btn-outline-dark">📅 Schedule Session</a>
+                    <a href="/Users/Create" class="btn btn-outline-dark">👤 Add User</a>
+                    <a href="/Grades/Create" class="btn btn-outline-dark">🎓 Record Grades</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

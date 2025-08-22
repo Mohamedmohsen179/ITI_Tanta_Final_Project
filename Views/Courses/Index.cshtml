@@ -1,0 +1,76 @@
+﻿@model IEnumerable<ITI_Tanta_Final_Project.Models.Course>
+
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 bg-light p-3" style="min-height:100vh;">
+        <h4 class="mb-4">Dashboard</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link active" href="/Courses">📚 Courses</a></li>
+            <li class="nav-item"><a class="nav-link" href="/Instructors">👨‍🏫 Instructors</a></li>
+            <li class="nav-item"><a class="nav-link" href="/Sessions">🗓️ Sessions</a></li>
+            <li class="nav-item"><a class="nav-link" href="/Users">👥 Users</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9 p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="fw-bold">Courses</h2>
+            <a class="btn btn-primary shadow-sm" asp-action="Create">+ Add Course</a>
+        </div>
+
+        <!-- Search Box -->
+        <form method="get" asp-action="Index" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="search" value="@ViewBag.CurrentFilter"
+                       class="form-control" placeholder="🔍 Search by Course, Category, or Instructor..." />
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+                <a class="btn btn-outline-secondary" asp-action="Index">Reset</a>
+            </div>
+        </form>
+
+        <!-- Courses Table -->
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Instructor</th>
+                        <th>Sessions</th>
+                        <th style="width: 200px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">No courses found.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var course in Model)
+                        {
+                            <tr>
+                                <td>@course.Name</td>
+                                <td>@course.Category</td>
+                                <td>@course.Instructor?.Name</td>
+                                <td class="text-center">@course.Sessions.Count</td>
+                                <td class="text-center">
+                                    <a class="btn btn-info btn-sm me-1" asp-action="Details" asp-route-id="@course.Id">Details</a>
+                                    <a class="btn btn-warning btn-sm me-1" asp-action="Edit" asp-route-id="@course.Id">Edit</a>
+                                    <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@course.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

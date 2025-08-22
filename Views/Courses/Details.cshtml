@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ITI_Tanta_Final_Project.Models.Course
+
+@{
+    ViewData["Title"] = "Course Details";
+}
+
+<div class="row">
+    <div class="col-md-3 bg-light p-3" style="min-height:100vh;">
+        <h4 class="mb-4">Dashboard</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link active" href="/Courses">📚 Courses</a></li>
+        </ul>
+    </div>
+
+    <div class="col-md-9 p-4">
+        <h2>@Model.Name</h2>
+        <p><strong>Category:</strong> @Model.Category</p>
+        <p><strong>Instructor:</strong> @Model.Instructor?.Name</p>
+
+        <h4>Sessions</h4>
+        <ul>
+            @foreach (var session in Model.Sessions)
+            {
+                <li>@session.Title (@session.StartDate.ToShortDateString())</li>
+            }
+        </ul>
+
+        <h4>Trainees</h4>
+        <ul>
+            @foreach (var trainee in Model.Trainees)
+            {
+                <li>@trainee.Name</li>
+            }
+        </ul>
+
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+

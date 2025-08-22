@@ -1,8 +1,5 @@
-﻿using System;
-using ITI_Tanta_Final_Project.Repositories.Contracts;
+﻿using ITI_Tanta_Final_Project.Repositories.Contracts;
 using ITI_Tanta_Final_Project.context;
-
-
 using Microsoft.EntityFrameworkCore;
 
 namespace ITI_Tanta_Final_Project.Repositories.Implementations
@@ -18,38 +15,36 @@ namespace ITI_Tanta_Final_Project.Repositories.Implementations
             _dbSet = _context.Set<T>();
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return _dbSet.ToList();
+            return await _dbSet.ToListAsync();
         }
 
-        public T GetById(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
         }
 
-        public void Add(T entity)
+        public async Task AddAsync(T entity)
         {
-            _dbSet.Add(entity);
+            await _dbSet.AddAsync(entity);
         }
 
-        public void Update(T entity)
+        public Task UpdateAsync(T entity)
         {
             _dbSet.Update(entity);
+            return Task.CompletedTask;
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var entity = _dbSet.Find(id);
+            var entity = await _dbSet.FindAsync(id);
             if (entity != null)
             {
                 _dbSet.Remove(entity);
             }
         }
 
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
+       
     }
 }

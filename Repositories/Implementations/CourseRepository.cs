@@ -23,13 +23,24 @@ namespace ITI_Tanta_Final_Project.Repositories.Implementations
         public Task<Course?> GetByNameAsync(string name) =>
             _db.AsNoTracking().FirstOrDefaultAsync(c => c.Name == name);
 
-        public async Task<IEnumerable<Course>> SearchAsync(string? name, string? category)
+        public async Task<Course?> GetByIdWithInstructorAsync(int id)
+        {
+            return await _db.Include(c => c.Instructor)
+                            .FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+        public async Task<IEnumerable<Course>> SearchAsync(string? search)
         {
             var q = _db.AsNoTracking().Include(c => c.Instructor).AsQueryable();
-            if (!string.IsNullOrWhiteSpace(name))
-                q = q.Where(c => c.Name.Contains(name));
-            if (!string.IsNullOrWhiteSpace(category))
-                q = q.Where(c => c.Category.Contains(category));
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                q = q.Where(c =>
+                    c.Name.Contains(search) ||
+                    c.Category.Contains(search) ||
+                    c.Instructor.Name.Contains(search));
+            }
+
             return await q.ToListAsync();
         }
     }

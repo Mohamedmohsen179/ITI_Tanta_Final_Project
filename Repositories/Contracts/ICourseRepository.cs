@@ -5,7 +5,7 @@ namespace ITI_Tanta_Final_Project.Repositories.Contracts
     public interface ICourseRepository : IRepository<Course>
     {
         Task<Course?> GetByNameAsync(string name);
-        Task<IEnumerable<Course>> SearchAsync(string? name, string? category);
+        Task<IEnumerable<Course>> SearchAsync(string? search);
     }
 
 }
