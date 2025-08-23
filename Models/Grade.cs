@@ -7,12 +7,12 @@ namespace ITI_Tanta_Final_Project.Models
         public int Id { get; set; }
         [Required]
         public int SessionId { get; set; }
-        public Session Session { get; set; } = new Session();
+        public Session? Session { get; set; } 
 
         [Required]
         public int TraineeId { get; set; }
 
-        public User Trainee { get; set; } = new User();
+        public User? Trainee { get; set; } 
 
         
         [Required(ErrorMessage = "Value is required")]

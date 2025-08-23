@@ -8,19 +8,15 @@
 
   <ItemGroup>
     <Compile Remove="Views\Course\**" />
-    <Compile Remove="Views\Grades\**" />
     <Compile Remove="Views\Session\**" />
     <Compile Remove="Views\User\**" />
     <Content Remove="Views\Course\**" />
-    <Content Remove="Views\Grades\**" />
     <Content Remove="Views\Session\**" />
     <Content Remove="Views\User\**" />
     <EmbeddedResource Remove="Views\Course\**" />
-    <EmbeddedResource Remove="Views\Grades\**" />
     <EmbeddedResource Remove="Views\Session\**" />
     <EmbeddedResource Remove="Views\User\**" />
     <None Remove="Views\Course\**" />
-    <None Remove="Views\Grades\**" />
     <None Remove="Views\Session\**" />
     <None Remove="Views\User\**" />
   </ItemGroup>

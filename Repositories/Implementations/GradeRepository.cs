@@ -32,6 +32,19 @@ namespace ITI_Tanta_Final_Project.Repositories.Implementations
                      .Where(g => g.SessionId == sessionId)
                      .ToListAsync();
 
+        public async Task<IEnumerable<Grade>> GetAllWithDetailsAsync() =>
+    await _db.AsNoTracking()
+             .Include(g => g.Trainee)
+             .Include(g => g.Session)
+                .ThenInclude(s => s.Course) 
+             .ToListAsync();
+
+        public async Task<Grade?> GetByIdWithDetailsAsync(int id) =>
+    await _db.AsNoTracking()
+             .Include(g => g.Trainee)
+             .Include(g => g.Session)
+                .ThenInclude(s => s.Course)
+             .FirstOrDefaultAsync(g => g.Id == id);
         public async Task RecordGradeAsync(int traineeId, int sessionId, int value)
         {
             if (value < 0 || value > 100)

@@ -1,0 +1,37 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<ITI_Tanta_Final_Project.Models.Grade>
+
+<h2>Grades</h2>
+<a asp-action="Create" class="btn btn-primary">Add New Grade</a>
+
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+			<th>Course</th>
+            <th>Session</th>
+            <th>Trainee</th>
+            <th>Value</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var grade in Model)
+    {
+        <tr>
+                <td>@grade.Session.Course.Name</td>
+                <td>@grade.Session.Title</td>
+            <td>@grade.Trainee.Name</td>
+            <td>@grade.value</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@grade.Id" class="btn btn-sm btn-warning">Edit</a>
+                <a asp-action="Delete" asp-route-id="@grade.Id" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
