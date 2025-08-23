@@ -26,7 +26,14 @@
         <ul>
             @foreach (var session in Model.Sessions)
             {
-                <li>@session.Title (@session.StartDate.ToShortDateString())</li>
+                <li>
+                    @session.Title
+                    @{
+                        // If StartingTime is TimeSpan, display as HH:mm format
+                        var time = session.StartingTime;
+                    }
+                    (@time.ToString(@"hh\:mm"))
+                </li>
             }
         </ul>
 
@@ -41,4 +48,3 @@
         <a asp-action="Index" class="btn btn-secondary">Back to List</a>
     </div>
 </div>
-

@@ -6,12 +6,12 @@ namespace ITI_Tanta_Final_Project.Models
     {
         public int Id { get; set; }
         [Required (ErrorMessage = "StartDate is required")]
-        public DateTime StartDate { get; set; }
+        public TimeSpan StartingTime { get; set; }
 
 
 
         [Required(ErrorMessage = "EndDate is required")]
-        public DateTime EndDate { get; set; }
+        public TimeSpan EndingTime { get; set; }
 
         [Required(ErrorMessage = "Title is required")]
         [MaxLength(100, ErrorMessage = "Title must not exceed 100 characters")]
@@ -28,7 +28,7 @@ namespace ITI_Tanta_Final_Project.Models
         {
             get
             {
-                return DateTime.Now >= StartDate && DateTime.Now <= EndDate;
+                return TimeSpan.Compare(DateTime.Now.TimeOfDay, StartingTime) >= 0 && TimeSpan.Compare(DateTime.Now.TimeOfDay, EndingTime) <= 0;
             }
         }
 

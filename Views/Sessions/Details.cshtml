@@ -16,9 +16,9 @@
                     <dt class="col-sm-4">Course</dt>
                     <dd class="col-sm-8">@Model.Course?.Name</dd>
                     <dt class="col-sm-4">Start Date</dt>
-                    <dd class="col-sm-8">@Model.StartDate.ToString("yyyy-MM-dd")</dd>
+                    <dd class="col-sm-8">@Model.StartingTime.ToString("yyyy-MM-dd")</dd>
                     <dt class="col-sm-4">End Date</dt>
-                    <dd class="col-sm-8">@Model.EndDate.ToString("yyyy-MM-dd")</dd>
+                    <dd class="col-sm-8">@Model.EndingTime.ToString("yyyy-MM-dd")</dd>
                 </dl>
                 <a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
             </div>

@@ -64,8 +64,8 @@ namespace ITI_Tanta_Final_Project.Controllers
             var session = await _uow.Sessions.GetByIdAsync(id);
             if (session == null) return NotFound();
             session.Title = model.Title;
-            session.StartDate = model.StartDate;
-            session.EndDate = model.EndDate;
+            session.StartingTime = model.StartingTime;
+            session.EndingTime = model.EndingTime;
             session.CourseId = model.CourseId;
             await _uow.CompleteAsync();
             return RedirectToAction(nameof(Index));
