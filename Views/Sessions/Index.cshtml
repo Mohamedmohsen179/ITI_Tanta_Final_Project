@@ -23,8 +23,9 @@
     <thead class="table-dark">
         <tr>
             <th>Course</th>
-            <th>Start Date</th>
-            <th>End Date</th>
+            <th>Session Title</th>
+            <th>Start Time</th>
+            <th>End Time</th>
             <th style="width: 200px;">Actions</th>
         </tr>
     </thead>
@@ -33,16 +34,16 @@
         {
             <tr>
                 <td>@item.Course?.Name</td>
-                <td>@item.StartingTime.ToString("HH:MM:SS")</td>
-                <td>@item.EndingTime.ToString("HH:MM:SS")</td>
+                <td>@item.Title</td>
+                <td>@item.StartingTime.ToString(@"hh\:mm\:ss")</td>
+                <td>@item.EndingTime.ToString(@"hh\:mm\:ss")</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm
-                            btn-warning me-1">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm
-                                btn-danger">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning me-1">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>
         }
+    </tbody>
     </tbody>
 </table>
 @if (ViewBag.TotalPages > 1)

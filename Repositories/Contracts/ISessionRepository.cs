@@ -4,6 +4,7 @@ namespace ITI_Tanta_Final_Project.Repositories.Contracts
 {
     public interface ISessionRepository : IRepository<Session>
     {
+        Task<IEnumerable<Session>> GetAllWithCoursesAsync();
         Task<IEnumerable<Session>> GetByCourseNameAsync(string courseName);
     }
 }

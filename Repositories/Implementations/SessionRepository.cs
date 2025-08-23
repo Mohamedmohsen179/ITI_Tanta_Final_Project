@@ -25,5 +25,12 @@ namespace ITI_Tanta_Final_Project.Repositories.Implementations
                .Where(s => s.Course.Name.Contains(courseName))
                .ToListAsync()
                .ContinueWith(t => t.Result.AsEnumerable());
+
+        public async Task<IEnumerable<Session>> GetAllWithCoursesAsync()
+        {
+            return await _context.Sessions
+                .Include(s => s.Course)
+                .ToListAsync();
+        }
     }
 }

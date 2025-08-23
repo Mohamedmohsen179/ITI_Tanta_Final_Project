@@ -1,7 +1,8 @@
-﻿using ITI_Tanta_Final_Project.Models;
+﻿using System.Threading.Tasks;
+using ITI_Tanta_Final_Project.Models;
 using ITI_Tanta_Final_Project.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ITI_Tanta_Final_Project.Controllers
 {
@@ -16,8 +17,7 @@ namespace ITI_Tanta_Final_Project.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var sessions = await _uow.Sessions.GetAllAsync();
-
+            var sessions = await _uow.Sessions.GetAllWithCoursesAsync();
             return View(sessions);
         }
         public async Task<IActionResult> Details(int id)
@@ -49,27 +49,36 @@ namespace ITI_Tanta_Final_Project.Controllers
         {
             var session = await _uow.Sessions.GetByIdAsync(id);
             if (session == null) return NotFound();
-            ViewBag.Courses = await _uow.Courses.GetAllAsync();
+
+            ViewBag.Courses = new SelectList(await _uow.Courses.GetAllAsync(), "Id", "Name", session.CourseId);
             return View(session);
         }
+
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Session model)
         {
             if (id != model.Id) return BadRequest();
+
             if (!ModelState.IsValid)
             {
-                ViewBag.Courses = await _uow.Courses.GetAllAsync();
+                ViewBag.Courses = new SelectList(await _uow.Courses.GetAllAsync(), "Id", "Name", model.CourseId);
                 return View(model);
             }
+
             var session = await _uow.Sessions.GetByIdAsync(id);
             if (session == null) return NotFound();
+
             session.Title = model.Title;
             session.StartingTime = model.StartingTime;
             session.EndingTime = model.EndingTime;
             session.CourseId = model.CourseId;
+
+            await _uow.Sessions.UpdateAsync(session);
             await _uow.CompleteAsync();
+
             return RedirectToAction(nameof(Index));
         }
+
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -96,6 +105,10 @@ namespace ITI_Tanta_Final_Project.Controllers
     }
 
 }
+
+
+
+
 
 
 

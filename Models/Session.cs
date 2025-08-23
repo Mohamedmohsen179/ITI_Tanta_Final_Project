@@ -5,12 +5,12 @@ namespace ITI_Tanta_Final_Project.Models
     public class Session
     {
         public int Id { get; set; }
-        [Required (ErrorMessage = "StartDate is required")]
+        [Required (ErrorMessage = "Start Time is required")]
         public TimeSpan StartingTime { get; set; }
 
 
 
-        [Required(ErrorMessage = "EndDate is required")]
+        [Required(ErrorMessage = "End Time is required")]
         public TimeSpan EndingTime { get; set; }
 
         [Required(ErrorMessage = "Title is required")]
@@ -20,7 +20,7 @@ namespace ITI_Tanta_Final_Project.Models
         [Required(ErrorMessage ="courseid is required")]
         public int CourseId { get; set; }
 
-        public Course Course { get; set; } = new Course();
+        public Course? Course { get; set; }
 
         public List<Grade> Grades { get; set; } = new List<Grade>();
 
