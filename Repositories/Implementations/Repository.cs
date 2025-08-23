@@ -36,15 +36,10 @@ namespace ITI_Tanta_Final_Project.Repositories.Implementations
             return Task.CompletedTask;
         }
 
-        public async Task DeleteAsync(int id)
+        public Task DeleteAsync(T entity)
         {
-            var entity = await _dbSet.FindAsync(id);
-            if (entity != null)
-            {
-                _dbSet.Remove(entity);
-            }
+            _dbSet.Remove(entity);
+            return Task.CompletedTask;
         }
-
-       
     }
 }

@@ -87,20 +87,35 @@ namespace ITI_Tanta_Final_Project.Controllers
             await _uow.CompleteAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        
+        
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             var course = await _uow.Courses.GetByIdAsync(id);
             if (course == null) return NotFound();
             return View(course);
         }
-
-        [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(Course course)
         {
-            await _uow.Courses.DeleteAsync(id);
-            await _uow.CompleteAsync();
-            return RedirectToAction(nameof(Index));
+            if (course == null) return NotFound();
+            try
+            {
+                await _uow.Courses.DeleteAsync(course);
+                await _uow.CompleteAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                
+                await PopulateInstructorsDropDown(course.InstructorId);
+                ModelState.AddModelError(string.Empty, "Unable to delete course. It may be referenced by other records.");
+                return View(course);
+            }
         }
+       
+
+
     }
 }

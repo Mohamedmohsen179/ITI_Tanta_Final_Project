@@ -22,21 +22,21 @@ namespace ITI_Tanta_Final_Project.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.Roles = new SelectList(System.Enum.GetValues(typeof(User.Role)));
+            ViewBag.Roles = new SelectList(Enum.GetValues(typeof(User.Role)));
             return View();
         }
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(User user)
         {
-            // Unique Email
+
             var existing = await _uow.Users.GetByEmailAsync(user.Email);
             if (existing != null)
                 ModelState.AddModelError(nameof(user.Email), "Email already exists.");
 
             if (!ModelState.IsValid)
             {
-                ViewBag.Roles = new SelectList(System.Enum.GetValues(typeof(User.Role)));
+                ViewBag.Roles = new SelectList(Enum.GetValues(typeof(User.Role)));
                 return View(user);
             }
 
@@ -50,7 +50,7 @@ namespace ITI_Tanta_Final_Project.Controllers
             var user = await _uow.Users.GetByIdAsync(id);
             if (user == null) return NotFound();
 
-            ViewBag.Roles = new SelectList(System.Enum.GetValues(typeof(User.Role)));
+            ViewBag.Roles = new SelectList(Enum.GetValues(typeof(User.Role)));
             return View(user);
         }
 
@@ -59,17 +59,25 @@ namespace ITI_Tanta_Final_Project.Controllers
         {
             if (id != model.Id) return BadRequest();
 
-            var existing = await _uow.Users.GetByEmailAsync(model.Email);
-            if (existing != null && existing.Id != model.Id)
+            var existingUser = await _uow.Users.GetByIdAsync(id);
+            if (existingUser == null) return NotFound();
+
+
+            var emailUser = await _uow.Users.GetByEmailAsync(model.Email);
+            if (emailUser != null && emailUser.Id != model.Id)
                 ModelState.AddModelError(nameof(model.Email), "Email already exists.");
 
             if (!ModelState.IsValid)
             {
-                ViewBag.Roles = new SelectList(System.Enum.GetValues(typeof(User.Role)));
+                ViewBag.Roles = new SelectList(Enum.GetValues(typeof(User.Role)));
                 return View(model);
             }
 
-            await _uow.Users.UpdateAsync(model);
+
+            existingUser.Name = model.Name;
+            existingUser.Email = model.Email;
+            existingUser.UserRole = model.UserRole;
+
             await _uow.CompleteAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -81,15 +89,20 @@ namespace ITI_Tanta_Final_Project.Controllers
             return View(user);
         }
 
-        [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var user = await _uow.Users.GetByIdAsync(id);
-            if (user == null) return NotFound();
 
-            await _uow.Users.DeleteAsync(id);
+        [HttpPost, ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> Delete(User user)
+        {
+
+            if (user == null) return BadRequest();
+
+            await _uow.Users.DeleteAsync(user);
+
             await _uow.CompleteAsync();
             return RedirectToAction(nameof(Index));
+
+
         }
     }
 }

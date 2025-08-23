@@ -10,8 +10,10 @@
 }
 
 <h2>Edit User</h2>
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 <form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
     <input type="hidden" asp-for="Id" />
 
     <div class="form-group">
@@ -34,4 +36,9 @@
     <button type="submit" class="btn btn-primary">Update</button>
     <a asp-action="Index" class="btn btn-secondary">Back</a>
 </form>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+
 

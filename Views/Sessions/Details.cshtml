@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Session
+@{
+    ViewData["Title"] = "Session Details";
+}
+<h2 class="text-center my-4">Session Details</h2>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Course</dt>
+                    <dd class="col-sm-8">@Model.Course?.Name</dd>
+                    <dt class="col-sm-4">Start Date</dt>
+                    <dd class="col-sm-8">@Model.StartDate.ToString("yyyy-MM-dd")</dd>
+                    <dt class="col-sm-4">End Date</dt>
+                    <dd class="col-sm-8">@Model.EndDate.ToString("yyyy-MM-dd")</dd>
+                </dl>
+                <a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
