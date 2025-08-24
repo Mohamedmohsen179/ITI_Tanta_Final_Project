@@ -43,6 +43,12 @@ namespace ITI_Tanta_Final_Project.Repositories.Implementations
 
             return await q.ToListAsync();
         }
+        public async Task<Course?> GetByIdWithSessionAsync(int id) 
+        {
+            return await _db.Include(c => c.Sessions)
+                            .FirstOrDefaultAsync(c => c.Id == id);
+        }
+
 
         public Task<IEnumerable<Course>> GetAllSessionsAsync(string? search)
         {
@@ -60,6 +66,15 @@ namespace ITI_Tanta_Final_Project.Repositories.Implementations
             return query
                 .ToListAsync()
                 .ContinueWith(t => t.Result.AsEnumerable());
+        }
+
+        public Task<Course?> GetDetails(int id)
+        {
+            return _db
+                .Include(c => c.Instructor)
+                .Include(c => c.Sessions)
+                .Include(c => c.Trainees)
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
     }
 }

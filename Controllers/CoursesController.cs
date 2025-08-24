@@ -21,7 +21,7 @@ namespace ITI_Tanta_Final_Project.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var course = await _uow.Courses.GetByIdAsync(id);
+            var course = await _uow.Courses.GetDetails(id);
             if (course == null) return NotFound();
             return View(course);
         }
@@ -86,8 +86,8 @@ namespace ITI_Tanta_Final_Project.Controllers
             await _uow.CompleteAsync();
             return RedirectToAction(nameof(Index));
         }
-        
-        
+
+
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -95,24 +95,36 @@ namespace ITI_Tanta_Final_Project.Controllers
             if (course == null) return NotFound();
             return View(course);
         }
-        
-
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(User user)
+        public async Task<IActionResult> Delete(Course course)
         {
-            
-            if (user == null) return BadRequest();
+            if (course == null) return BadRequest();
+            var dbCourse = await _uow.Courses.GetByIdWithSessionAsync(course.Id);
+            if (dbCourse == null) return NotFound();
 
-            
-            var dbUser = await _uow.Users.GetByIdAsync(user.Id);
-            if (dbUser == null) return NotFound();
+            // Validation: Prevent deletion if course has sessions
+            if (dbCourse.Sessions != null && dbCourse.Sessions.Any())
+            {
+                TempData["DeleteError"] = "❌ Cannot delete course. It has associated sessions.";
+                return RedirectToAction(nameof(Index));
+            }
 
-            
-            await _uow.Users.DeleteAsync(dbUser);
+            await _uow.Courses.DeleteAsync(dbCourse);
             await _uow.CompleteAsync();
-
+            TempData["DeleteSuccess"] = "✅ Course deleted successfully.";
             return RedirectToAction(nameof(Index));
         }
-
+        //[HttpPost, ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Delete(Course course)
+        //{
+        //    if (course == null) return BadRequest();
+        //    var dbCourse = await _uow.Courses.GetByIdAsync(course.Id);
+        //    if (dbCourse == null) return NotFound();
+        //    await _uow.Courses.DeleteAsync(dbCourse);
+        //    await _uow.CompleteAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
     }
-}
+
+        
+    }

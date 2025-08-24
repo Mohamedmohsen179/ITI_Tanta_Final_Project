@@ -3,6 +3,24 @@
 @{
     ViewData["Title"] = "Courses";
 }
+@{
+    var deleteError = TempData["DeleteError"] as string;
+    var deleteSuccess = TempData["DeleteSuccess"] as string;
+}
+@if (!string.IsNullOrEmpty(deleteError))
+{
+    <div id="delete-message" class="alert alert-danger text-center">@deleteError</div>
+}
+@if (!string.IsNullOrEmpty(deleteSuccess))
+{
+    <div id="delete-message" class="alert alert-success text-center">@deleteSuccess</div>
+}
+<script>
+    setTimeout(function() {
+        var msg = document.getElementById('delete-message');
+        if (msg) msg.style.display = 'none';
+    }, 3000);
+</script>
 
 <div class="container p-4">
     <!-- Header -->
