@@ -15,9 +15,13 @@ namespace ITI_Tanta_Final_Project.Controllers
             _uow = uow;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? search)
         {
             var sessions = await _uow.Sessions.GetAllWithCoursesAsync();
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                sessions = await _uow.Sessions.SearchAsync(search);
+            }
             return View(sessions);
         }
         public async Task<IActionResult> Details(int id)

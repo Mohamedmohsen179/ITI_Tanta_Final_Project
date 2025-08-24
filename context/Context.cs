@@ -57,8 +57,6 @@ namespace ITI_Tanta_Final_Project.context
                 .HasForeignKey(g => g.SessionId)
                  .OnDelete(DeleteBehavior.Restrict);
 
-
-
         }
     }
 

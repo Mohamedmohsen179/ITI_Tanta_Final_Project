@@ -32,5 +32,21 @@ namespace ITI_Tanta_Final_Project.Repositories.Implementations
                 .Include(s => s.Course)
                 .ToListAsync();
         }
+
+        public Task<IEnumerable<Session>> SearchAsync(string? search)
+        {
+            var query = _context.Sessions
+                .Include(s => s.Course)
+                .AsQueryable();
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                query = query.Where(s =>
+                    s.Title.Contains(search) ||
+                    s.Course.Name.Contains(search));
+            }
+            return query
+                .ToListAsync()
+                .ContinueWith(t => t.Result.AsEnumerable());
+        }
     }
 }

@@ -6,6 +6,7 @@ namespace ITI_Tanta_Final_Project.Repositories.Contracts
     {
         Task<Course?> GetByNameAsync(string name);
         Task<IEnumerable<Course>> SearchAsync(string? search);
+        Task<IEnumerable<Course>> GetAllSessionsAsync(string? search);
     }
 
 }

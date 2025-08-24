@@ -71,5 +71,25 @@ namespace ITI_Tanta_Final_Project.Repositories.Implementations
 
             await _context.SaveChangesAsync();
         }
+
+        public Task<IEnumerable<Grade>> SearchAsync(string? search)
+        {
+            var query = _db
+                .Include(g => g.Trainee)
+                .Include(g => g.Session)
+                    .ThenInclude(s => s.Course)
+                .AsQueryable();
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                query = query.Where(g =>
+                    g.Trainee.Name.Contains(search) ||
+                    g.Session.Title.Contains(search) ||
+                    g.Session.Course.Name.Contains(search) ||
+                    g.value.ToString().Contains(search));
+            }
+            return query
+                .ToListAsync()
+                .ContinueWith(t => t.Result.AsEnumerable());
+        }
     }
 }

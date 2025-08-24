@@ -6,6 +6,14 @@
 @model IEnumerable<ITI_Tanta_Final_Project.Models.Grade>
 
 <h2>Grades</h2>
+<form method="get" asp-action="Index" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="search" value="@ViewBag.CurrentFilter"
+               class="form-control" placeholder="🔍 Search by Course, Session,value or Trainee..." />
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+        <a class="btn btn-outline-secondary" asp-action="Index">Reset</a>
+    </div>
+</form>
 <a asp-action="Create" class="btn btn-primary">Add New Grade</a>
 
 <table class="table table-bordered mt-3">

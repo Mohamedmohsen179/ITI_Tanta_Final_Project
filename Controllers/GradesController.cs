@@ -15,9 +15,13 @@ namespace ITI_Tanta_Final_Project.Controllers
         }
 
         // GET: Grades
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? search)
         {
             var grades = await _uow.Grades.GetAllWithDetailsAsync();
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                grades = await _uow.Grades.SearchAsync(search);
+            }
             return View(grades);
         }
 

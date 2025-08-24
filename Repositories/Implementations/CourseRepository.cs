@@ -43,5 +43,23 @@ namespace ITI_Tanta_Final_Project.Repositories.Implementations
 
             return await q.ToListAsync();
         }
+
+        public Task<IEnumerable<Course>> GetAllSessionsAsync(string? search)
+        {
+            var query = _db
+                .Include(c => c.Sessions)
+                .Include(c => c.Instructor)
+                .AsQueryable();
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                query = query.Where(c =>
+                    c.Name.Contains(search) ||
+                    c.Category.Contains(search) ||
+                    c.Sessions.Any(s => s.Title.Contains(search)));
+            }
+            return query
+                .ToListAsync()
+                .ContinueWith(t => t.Result.AsEnumerable());
+        }
     }
 }
