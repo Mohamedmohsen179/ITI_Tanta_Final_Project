@@ -88,21 +88,33 @@ namespace ITI_Tanta_Final_Project.Controllers
             if (user == null) return NotFound();
             return View(user);
         }
-
-
+       
         [HttpPost, ValidateAntiForgeryToken]
-
         public async Task<IActionResult> Delete(User user)
         {
-
             if (user == null) return BadRequest();
 
-            await _uow.Users.DeleteAsync(user);
+            var dbUser = await _uow.Users.GetById_include_teachingcoursesAsync(user.Id);
+            if (dbUser == null) return NotFound();
 
+            bool isInstructor = dbUser.UserRole == ITI_Tanta_Final_Project.Models.User.Role.Instructor;
+            bool teachesCourses = dbUser.TeachingCourses != null && dbUser.TeachingCourses.Any();
+
+            if (isInstructor && dbUser.TeachingCourses.Any())
+            {
+                TempData["DeleteError"] = "❌ Cannot delete instructor. They are assigned to one or more courses.";
+                return RedirectToAction(nameof(Index));
+            }
+
+
+            await _uow.Users.DeleteAsync(dbUser);
             await _uow.CompleteAsync();
+
+            TempData["DeleteSuccess"] = "✅ User deleted successfully.";
             return RedirectToAction(nameof(Index));
-
-
         }
+
+
+       
     }
 }

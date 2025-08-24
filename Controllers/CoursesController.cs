@@ -95,35 +95,19 @@ namespace ITI_Tanta_Final_Project.Controllers
             if (course == null) return NotFound();
             return View(course);
         }
-        //[HttpPost, ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Delete(Course course)
-        //{
-        //    if (course == null) return NotFound();
-        //    try
-        //    {
-        //        await _uow.Courses.DeleteAsync(course);
-        //        await _uow.CompleteAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        await PopulateInstructorsDropDown(course.InstructorId);
-        //        ModelState.AddModelError(string.Empty, "Unable to delete course. It may be referenced by other records.");
-        //        return View(course);
-        //    }
-        //}
+        
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(User user)
         {
+            
             if (user == null) return BadRequest();
 
-            // Reload the user from the database to ensure navigation properties are loaded
+            
             var dbUser = await _uow.Users.GetByIdAsync(user.Id);
             if (dbUser == null) return NotFound();
 
-            // Delete the user; EF Core will cascade delete their courses
+            
             await _uow.Users.DeleteAsync(dbUser);
             await _uow.CompleteAsync();
 

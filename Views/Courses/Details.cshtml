@@ -29,7 +29,6 @@
                 <li>
                     @session.Title
                     @{
-                        // If StartingTime is TimeSpan, display as HH:mm format
                         var time = session.StartingTime;
                     }
                     (@time.ToString(@"hh\:mm"))

@@ -42,7 +42,7 @@ namespace ITI_Tanta_Final_Project.context
               .HasMany(u => u.Grades)
                .WithOne(g => g.Trainee)
                 .HasForeignKey(g => g.TraineeId)
-                 .OnDelete(DeleteBehavior.Restrict);
+                 .OnDelete(DeleteBehavior.Cascade);
 
 
             modelBuilder.Entity<Course>()

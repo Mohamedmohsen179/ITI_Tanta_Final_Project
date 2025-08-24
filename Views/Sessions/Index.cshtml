@@ -9,12 +9,7 @@
 }
 <h2 class="text-center my-4">Sessions</h2>
 <div class="row mb-3">
-    @* <div class="col-md-6">
-        <form asp-action="Index" method="get" class="d-flex">
-            <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control me-2" placeholder="Search by Course Name..." />
-            <button type="submit" class="btn btn-outline-primary">Search</button>
-        </form>
-    </div> *@
+    
     <form method="get" asp-action="Index" class="mb-4">
         <div class="input-group">
             <input type="text" name="search" value="@ViewBag.CurrentFilter"

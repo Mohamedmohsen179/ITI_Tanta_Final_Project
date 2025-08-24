@@ -23,6 +23,12 @@ namespace ITI_Tanta_Final_Project.Repositories.Implementations
             .FirstOrDefaultAsync(u => u.Email == email);
         }
 
+        public Task<User> GetById_include_teachingcoursesAsync(int id)
+        {
+            return _context.Users
+                .Include(u => u.TeachingCourses)
+                .FirstOrDefaultAsync(u => u.Id == id);
+        }
 
         public async Task<IEnumerable<User>> GetUsersByRoleAsync(User.Role role)
         {
