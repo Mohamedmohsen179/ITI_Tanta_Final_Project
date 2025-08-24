@@ -31,7 +31,7 @@ namespace ITI_Tanta_Final_Project.Repositories.Implementations
 
         public async Task<IEnumerable<Course>> SearchAsync(string? search)
         {
-            var q = _db.AsNoTracking().Include(c => c.Instructor).AsQueryable();
+            var q = _db.AsNoTracking().Include(c => c.Instructor).Include(c=>c.Sessions).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(search))
             {
@@ -43,11 +43,7 @@ namespace ITI_Tanta_Final_Project.Repositories.Implementations
 
             return await q.ToListAsync();
         }
-        public async Task<Course?> GetByIdWithSessionAsync(int id) 
-        {
-            return await _db.Include(c => c.Sessions)
-                            .FirstOrDefaultAsync(c => c.Id == id);
-        }
+      
 
 
         public Task<IEnumerable<Course>> GetAllSessionsAsync(string? search)
@@ -76,5 +72,11 @@ namespace ITI_Tanta_Final_Project.Repositories.Implementations
                 .Include(c => c.Trainees)
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
+
+        public Task<Course?> GetByIdWithSessionAsync(int id)
+        {
+            return _db.Include(c => c.Sessions)
+                      .FirstOrDefaultAsync(c => c.Id == id);
+        }       
     }
 }

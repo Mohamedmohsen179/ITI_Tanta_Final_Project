@@ -13,7 +13,7 @@ namespace ITI_Tanta_Final_Project.Controllers
 
         public async Task<IActionResult> Index(string? search)
         {
-            var items = await _uow.Courses.GetAllSessionsAsync(search);
+            var items = await _uow.Courses.SearchAsync(search);
             ViewBag.CurrentFilter = search;
             return View(items);
         }
