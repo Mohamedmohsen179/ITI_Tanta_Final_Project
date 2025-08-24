@@ -8,30 +8,50 @@
 @{
     ViewData["Title"] = "Course Details";
 }
-
-
-
-    <div class="col-md-9 p-4">
-        <h2>@Model.Name</h2>
-        <p><strong>Category:</strong> @Model.Category</p>
-        <p><strong>Instructor:</strong> @Model.Instructor?.Name</p>
-
-        <h4>Sessions</h4>
-        <ul>
-            @foreach (var session in Model.Sessions)
+<table class="table table-bordered">
+    <tr>
+        <th>Name</th>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <th>Category</th>
+        <td>@Model.Category</td>
+    </tr>
+    <tr>
+        <th>Instructor</th>
+        <td>@Model.Instructor?.Name</td>
+    </tr>
+    <tr>
+        <th>Sessions</th>
+        <td>
+            @if (Model.Sessions != null && Model.Sessions.Any())
             {
-                <li>
-                    @session.Title
-                    @{
-                        var time = session.StartingTime;
+                <ul>
+                    @foreach (var session in Model.Sessions)
+                    {
+                        <li>
+                            @session.Title
+                            @{
+                                var time = session.StartingTime;
+                            }
+                            (@time.ToString(@"hh\:mm"))
+                        </li>
                     }
-                    (@time.ToString(@"hh\:mm"))
-                </li>
+                </ul>
             }
-        </ul>
-
-       
-
+            else
+            {
+                <span>No sessions available.</span>
+            }
+        </td>
+    </tr>
+</table>
+<div class="d-flex justify-content-between mt-4">
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+    </div>
+    <div>
         <a asp-action="Index" class="btn btn-secondary">Back to List</a>
     </div>
 </div>
